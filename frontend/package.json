@@ -1,0 +1,23 @@
+{
+  "name": "drop-alert-frontend",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "@onesignal/onesignal-vue3": "^2.0.1",
+    "axios": "^1.7.9",
+    "currency-formatter": "^1.5.9",
+    "onesignal-vue": "^2.0.1",
+    "sass": "^1.83.4",
+    "vue": "^3.5.13"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-vue": "^5.2.1",
+    "vite": "^6.0.5"
+  }
+}

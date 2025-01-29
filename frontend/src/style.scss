@@ -1,0 +1,33 @@
+// Base styles for the app
+
+// Set default font
+body {
+    font-family: 'Helvetica Neue', Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+// Set box-sizing for all elements
+*, *::before, *::after {
+    box-sizing: inherit;
+}
+
+// Basic reset for common elements
+h1, h2, h3, h4, h5, h6, p, ul, ol, li {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+// Set default link styles
+a {
+    text-decoration: none;
+    color: inherit;
+}
+
+// Set default button styles
+button {
+    font-family: inherit;
+    cursor: pointer;
+}
