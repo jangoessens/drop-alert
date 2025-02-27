@@ -1,5 +1,5 @@
 import express from "express";
-import { addETF, getTrackedETFs, removeETF, manualUpdate } from "../services/etfService.js";
+import { addETF, getTrackedETFs, removeETF, manualUpdate, getSymbolByQuery } from "../services/etfService.js";
 
 const router = express.Router();
 
@@ -27,5 +27,13 @@ router.get("/update", async (req, res) => {
     console.log("returning the data");
     res.json(result);
 })
+
+
+router.get("/search", async (req, res) => {
+    console.log("Search for symbol");
+    const { query } = req.query;
+    const results = await getSymbolByQuery(query);
+    res.json(results);
+});
 
 export default router;

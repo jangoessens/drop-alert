@@ -13,7 +13,13 @@ export function addETF(symbol, threshold, period, data = []) {
         priceDiff: data['priceDiff'] ?? '',
         percentageDiff: data['percentageDiff'],
     }
-    trackedETFs.push({ symbol, threshold, period, checkData });
+
+    const existingIndex = trackedETFs.findIndex(etf => etf.symbol === symbol);
+    if (existingIndex !== -1) {
+        trackedETFs[existingIndex] = { symbol, threshold, period, checkData };
+    } else {
+        trackedETFs.push({ symbol, threshold, period, checkData });
+    }
 }
 
 function updateETF(symbol, fetchData){
@@ -32,6 +38,23 @@ function updateETF(symbol, fetchData){
 
 }
 
+export async function getSymbolByQuery(query) {
+    if (!query) {
+        return [];
+    }
+
+    const url = `https://query1.finance.yahoo.com/v1/finance/search?q=${query}`;
+    const response = await fetch(url);
+    const data = await response.json();
+    const results = data.quotes.map(quote => ({
+        symbol: quote.symbol,
+        name: quote.shortname,
+        exchange: quote.exchDisp,
+        iconUrl: quote.iconUrl,
+    }));
+    return results;
+};
+
 export function removeETF(symbol) {
     trackedETFs = trackedETFs.filter(etf => etf.symbol !== symbol);
 }
@@ -48,14 +71,14 @@ export async function manualUpdate() {
 async function checkETFPrices() {
     for (let etf of trackedETFs) {
         try {
-            const response = await getStockPriceDifference(etf.symbol, 8)
+            const response = await getStockPriceDifference(etf.symbol, 24)
             updateETF(etf.symbol, response);
             const percentageChange = response.percentageChange;
 
-            // if (percentageChange >= etf.threshold) {
+            if (percentageChange >= etf.threshold) {
                 sendNotification(`ALERT: ${etf.symbol} dropped ${percentageChange}%!`);
                 console.log("Notifcation Sent")
-            // }
+            }
             
         } catch (error) {
             console.error(`Error fetching ${etf.symbol} data:`, error);
@@ -118,7 +141,7 @@ async function getStockPriceDifference(symbol, period) {
   
 
 export function startScheduler() {
-    cron.schedule("*/1 * * * *", () => {
+    cron.schedule("*/5 * * * *", () => {
         console.log("Checking ETF prices...");
         checkETFPrices();
     });

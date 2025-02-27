@@ -31,3 +31,17 @@ button {
     font-family: inherit;
     cursor: pointer;
 }
+
+input {
+    height: 32px;
+    font-size: 18px;
+    border: 2px solid #5a7e62;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    border-radius: 5px;
+    gap: 16px;
+    padding: 16px;
+  }
+  
+.vue3-autocomplete-container {
+    position: relative;
+}

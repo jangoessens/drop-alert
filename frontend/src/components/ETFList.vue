@@ -53,9 +53,9 @@ const refresh = () => {
             <tbody>
                 <tr v-for="etf in tracked" :key="etf.symbol">
                     <td>{{ etf.symbol }}</td>
-                    <td>Geef bericht als ETF binnen {{ etf.period }} uur meer dan {{ etf.threshold }} % zakt</td>
+                    <td>Geef bericht als ETF binnen 24 uur meer dan {{ etf.threshold }} % zakt</td>
                     <td>{{ currencyFormatter.format(etf.checkData.currentPrice, {locale: 'nl-NL'}) }}</td>
-                    <td>Afgelopen {{ etf.period }} uur: <span>{{ etf.checkData.percentageDiff }}%</span></td>
+                    <td>Afgelopen 24 uur: <span>{{ etf.checkData.percentageDiff }}%</span></td>
                     <td>
                         <button @click="removeETF(etf.symbol)">Remove</button>
                     </td>
@@ -119,7 +119,6 @@ const refresh = () => {
         cursor: pointer;
         font-size: 1em;
         border-radius: 5px;
-        margin-top: 20px;
     }
 
     button:hover {
