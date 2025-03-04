@@ -35,97 +35,127 @@ const refresh = () => {
 </script>
 
 <template>
-  <div>
-    <h1>
-        {{ baseURL }}
+    <div>
 
-    </h1>
-        <table>
-            <thead>
-                <tr>
-                    <th>Symbol</th>
-                    <th>Summary</th>
-                    <th>Huidige prijs</th>
-                    <th>Difference</th>
-                    <th></th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr v-for="etf in tracked" :key="etf.symbol">
-                    <td>{{ etf.symbol }}</td>
-                    <td>Geef bericht als ETF binnen 24 uur meer dan {{ etf.threshold }} % zakt</td>
-                    <td>{{ currencyFormatter.format(etf.checkData.currentPrice, {locale: 'nl-NL'}) }}</td>
-                    <td>Afgelopen 24 uur: <span>{{ etf.checkData.percentageDiff }}%</span></td>
-                    <td>
-                        <button @click="removeETF(etf.symbol)">Remove</button>
-                    </td>
-                </tr>
-            </tbody>
-        </table>
+        <div class="table-container">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Symbol</th>
+                        <th>Huidige prijs</th>
+                        <th>Difference</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr v-for="etf in tracked" :key="etf.symbol">
+                        <td>{{ etf.symbol }}</td>
+                        <td>{{ currencyFormatter.format(etf.checkData.currentPrice, { locale: 'nl-NL' }) }}</td>
+                        <td><span>{{ etf.checkData.percentageDiff }}%</span></td>
+                        <td>
+                            <button class="invisible" @click="removeETF(etf.symbol)">
+                                🗑️
+                            </button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="buttons">
+            <button @click="refresh">
+                <i class="fas fa-sync-alt"></i> Refresh
+            </button>
 
-        <button @click="refresh">
-            <i class="fas fa-sync-alt"></i> Refresh
-        </button>
-
-        <button @click="manualUpdate">
-            Manual Update
-        </button>
-  </div>
+            <button @click="manualUpdate">
+                Manual Update
+            </button>
+        </div>
+    </div>
 </template>
 
 <style>
-    table {
-        width: 100%;
-        border-collapse: collapse;
-        margin: 20px 0;
-        font-size: 1em;
-        min-width: 400px;
-        box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
-    }
+.table-container {
+    max-width: 100%;
+    overflow-x: auto;
+}
 
-    thead tr {
-        background-color: #009879;
-        color: #ffffff;
-        text-align: left;
-        font-weight: bold;
-    }
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 20px 0;
+    font-size: 1em;
+    min-width: 400px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
+}
 
-    th, td {
+thead tr {
+    background-color: #009879;
+    color: #ffffff;
+    text-align: left;
+    font-weight: bold;
+}
+
+th,
+td {
+    padding: 8px 10px;
+    border: 1px solid #dddddd;
+
+    @media (min-width: 768px) {
         padding: 12px 15px;
-        border: 1px solid #dddddd;
     }
+}
 
-    tbody tr {
-        border-bottom: 1px solid #dddddd;
-    }
+tbody tr {
+    border-bottom: 1px solid #dddddd;
+}
 
-    tbody tr:nth-of-type(even) {
-        background-color: #f3f3f3;
-    }
+tbody tr:nth-of-type(even) {
+    background-color: #f3f3f3;
+}
 
-    tbody tr:last-of-type {
-        border-bottom: 2px solid #009879;
-    }
+tbody tr:last-of-type {
+    border-bottom: 2px solid #009879;
+}
 
-    tbody tr:hover {
-        background-color: #f1f1f1;
-    }
+tbody tr:hover {
+    background-color: #f1f1f1;
+}
 
-    button {
-        background-color: #009879;
-        color: white;
-        border: none;
-        padding: 10px 20px;
-        cursor: pointer;
-        font-size: 1em;
-        border-radius: 5px;
-    }
+button {
+    background-color: #009879;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    cursor: pointer;
+    font-size: 1em;
+    border-radius: 5px;
+}
 
-    button:hover {
-        background-color: #007f63;
-    }
+button.danger {
+    background-color: lightcoral;
 
-    button i {
-        margin-right: 5px;
-    }
+}
+
+button.invisible {
+    background-color: transparent;
+    color: #009879;
+    border: none;
+    padding: 0;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #007f63;
+}
+
+button i {
+    margin-right: 5px;
+}
+
+.buttons {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    margin-top: 20px;
+    gap: 24px;
+}
 </style>

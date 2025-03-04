@@ -60,8 +60,11 @@ const autoComplete = ref(null);
 <style lang="scss" scoped>
 .tracker-input {
   display: grid;
-  grid-template-columns: 1fr 1fr auto;
   gap: 16px;
+
+  @media screen and (min-width: 768px) {
+    grid-template-columns: 1fr 1fr auto;    
+  }
 }
 
 
