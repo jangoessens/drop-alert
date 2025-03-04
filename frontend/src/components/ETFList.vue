@@ -2,31 +2,28 @@
 import { onMounted, ref } from 'vue';
 import axios from 'axios';
 import currencyFormatter from 'currency-formatter';
-
+import { axiosInstance } from '../helpers/api';
+const baseURL = import.meta.env.VITE_NGROK_URL;
 const tracked = ref([]);
-
 const trackETF = async () => {
-    axios.get("http://localhost:5000/api/etf/tracked").then((res) => {
+    axiosInstance.get(`${baseURL}/api/etf/tracked`).then((res) => {
         tracked.value = res.data;
     }).catch((err) => {
         alert("Something went wrong");
     });
-
 };
 
 const removeETF = async (etfSymbol) => {
-    axios.post("http://localhost:5000/api/etf/remove",  {
+    axiosInstance.post(`${baseURL}/api/etf/remove`, {
         etfSymbol: etfSymbol,
     });
-
 };
 
-
 const manualUpdate = async () => {
-    axios.get("http://localhost:5000/api/etf/update").then((res) => {
+    axiosInstance.get(`${baseURL}/api/etf/update`).then((res) => {
         tracked.value = res.data;
-    })
-}
+    });
+};
 
 onMounted(() => {
     trackETF();
@@ -34,12 +31,15 @@ onMounted(() => {
 
 const refresh = () => {
     trackETF();
-}
+};
 </script>
 
 <template>
   <div>
-   
+    <h1>
+        {{ baseURL }}
+
+    </h1>
         <table>
             <thead>
                 <tr>
