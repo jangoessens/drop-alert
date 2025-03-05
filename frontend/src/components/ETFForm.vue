@@ -1,6 +1,5 @@
 <script setup>
 import { ref } from 'vue';
-import axios from 'axios';
 import Autocomplete from 'vue3-autocomplete'
 import 'vue3-autocomplete/dist/vue3-autocomplete.css'
 import { axiosInstance } from '../helpers/api';

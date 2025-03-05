@@ -1,9 +1,7 @@
 import axios from 'axios';
 
-const baseURL = 'your_base_url_here'; // Replace with your actual base URL
 
 export const axiosInstance = axios.create({
-    baseURL: baseURL,
     headers: {
         'ngrok-skip-browser-warning': 'true'
     }

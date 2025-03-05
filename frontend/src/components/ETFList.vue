@@ -1,6 +1,5 @@
 <script setup>
 import { onMounted, ref } from 'vue';
-import axios from 'axios';
 import currencyFormatter from 'currency-formatter';
 import { axiosInstance } from '../helpers/api';
 const baseURL = import.meta.env.VITE_NGROK_URL;
